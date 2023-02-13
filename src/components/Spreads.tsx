@@ -63,7 +63,7 @@ function Spreads() {
             const rowsRaw: GridValidRowModel[] = []
 
             data.result.list.forEach((sym, index) => {
-                if (sym.symbol.slice(-4) == "USDT") {
+                if (sym.symbol.slice(-4) === "USDT") {
                     let bid = parseFloat(sym.bid1Price)
                     let ask = parseFloat(sym.ask1Price)
                     let spread = ((ask - bid) / bid)*100
