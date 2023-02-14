@@ -53,6 +53,7 @@ export interface SymbolData {
 
 function Spreads() {
     const [rows, setRows] = useState<GridRowsProp>([])
+    const [updated, setUpdated] = useState(new Date(Date.now()))
 
     useEffect(() => {
         const fetchData = async () => {
@@ -91,6 +92,11 @@ function Spreads() {
         }
 
         fetchData()
+        const interval = setInterval(() => {
+            fetchData()
+            setUpdated(new Date(Date.now()) )
+        }, 10000);
+        return () => clearInterval(interval);
     }, [])
 
     const columns: GridColDef[] = [
@@ -105,6 +111,7 @@ function Spreads() {
         height: 800, 
         width: '35%', 
         margin: 'auto' }}>
+            <h4>Last updated: {updated.toLocaleTimeString()}</h4>
             <DataGrid 
                 rows={rows} 
                 columns={columns}
