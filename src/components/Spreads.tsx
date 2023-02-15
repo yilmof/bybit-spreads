@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { DataGrid, GridRowsProp, GridColDef, GridValidRowModel } from '@mui/x-data-grid';
+import { DataGrid, GridRowsProp, GridColDef, GridValidRowModel, GridComparatorFn } from '@mui/x-data-grid';
 import _ from 'lodash';
 
 export interface BybitData {
@@ -50,6 +50,11 @@ export interface SymbolData {
     volume24H: number
 }
 
+const netSpreadComparator: GridComparatorFn<string> = (v1, v2) => {
+    const v1float = parseFloat(v1.replace(/[^0-9-.]/g, ''));
+    const v2float = parseFloat(v2.replace(/[^0-9-.]/g, ''));
+    return v1float - v2float;
+}
 
 function Spreads() {
     const [rows, setRows] = useState<GridRowsProp>([])
@@ -100,23 +105,35 @@ function Spreads() {
     }, [])
 
     const columns: GridColDef[] = [
-        { field: 'col1', headerName: 'Symbol', width: 150 },
-        { field: 'col2', headerName: 'Spread', width: 150 },
-        { field: 'col3', headerName: 'Volume', width: 150},
-        { field: 'col4', headerName: 'Spread x Volume', width: 150 }
+        { field: 'col1', headerName: 'Symbol', width: 150, flex: 1 },
+        { field: 'col2', headerName: 'Spread', width: 150, flex: 1  },
+        { field: 'col3', headerName: 'Volume', width: 150, flex: 1 },
+        { field: 'col4', headerName: 'Spread x Volume', width: 150, flex: 1, sortComparator: netSpreadComparator  }
     ];
 
     return (
-    <div style={{ 
-        height: 800, 
-        width: '35%', 
-        margin: 'auto' }}>
-            <h4>Last updated: {updated.toLocaleTimeString()}</h4>
-            <DataGrid 
-                rows={rows} 
-                columns={columns}
-                hideFooterSelectedRowCount
-                />
+    // <div style={{ 
+    //     height: 800, 
+    //     width: '35%', 
+    //     margin: 'auto' }}>
+    //         <h4>Last updated: {updated.toLocaleTimeString()}</h4>
+    //         <DataGrid 
+    //             rows={rows} 
+    //             columns={columns}
+    //             hideFooterSelectedRowCount
+    //             />
+    // </div>
+    <div style={{ height: 800, width: '100%' }}>
+        <div style={{ display: 'flex', height: '100%', width: '50%', margin: 'auto'}}>
+            <div style={{ flexGrow: 1 }}>
+                <h4>Last updated: {updated.toLocaleTimeString()}</h4>
+                <DataGrid
+                    rows={rows} 
+                    columns={columns}
+                    hideFooterSelectedRowCount
+                    />
+            </div>
+        </div>
     </div>
     )
 }
