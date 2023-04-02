@@ -58,8 +58,12 @@ const Gainers = () => {
             type: 'number',
             cellClassName: (params: GridCellParams<any>) => {
                 return clsx('super-app', {
-                    negative: params.value > 0,
-                    positive: params.value < 0
+                    negative: params.value < 0 && params.value > -5,
+                    negativeFive: params.value < -5 && params.value > -10 ,
+                    negativeTen: params.value < -10,
+                    positive: params.value > 0 && params.value < 5,
+                    positiveFive: params.value > 5 && params.value < 10,
+                    positiveTen: params.value > 10
                 })
             }
         },
@@ -75,14 +79,31 @@ const Gainers = () => {
                     sx={{
                         height: 800,
                         width: '100%',
-                        '& .super-app.negative': {
-                            backgroundColor: 'rgba(157, 255, 118, 0.49)',
+                        '& .super-app.positive': {
+                            backgroundColor: '#21b300',
                             color: '#1a3e72',
                         },
-                        '& .super-app.positive': {
-                            backgroundColor: '#d47483',
+                        '& .super-app.positiveFive': {
+                            backgroundColor: '#2ae600',
+                            color: '#1a3e72',
+                        },
+                        '& .super-app.positiveTen': {
+                            backgroundColor: '#44ff19',
+                            color: '#1a3e72',
+                        },
+                        '& .super-app.negative': {
+                            backgroundColor: '#ff4545',
+                            color: '#1a3e72',
+                        },
+                        '& .super-app.negativeFive': {
+                            backgroundColor: '#b33030',
+                            color: '#1a3e72',
+                        },
+                        '& .super-app.negativeTen': {
+                            backgroundColor: '#661c1c',
                             color: '#1a3e72',
                         }
+                        
                     }}
                 >
                     <DataGrid
