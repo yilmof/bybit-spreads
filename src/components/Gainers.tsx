@@ -59,11 +59,11 @@ const Gainers = () => {
             cellClassName: (params: GridCellParams<any>) => {
                 return clsx('super-app', {
                     negative: params.value < 0 && params.value > -5,
-                    negativeFive: params.value < -5 && params.value > -10 ,
-                    negativeTen: params.value < -10,
+                    negativeFive: params.value <= -5 && params.value > -10 ,
+                    negativeTen: params.value <= -10,
                     positive: params.value > 0 && params.value < 5,
-                    positiveFive: params.value > 5 && params.value < 10,
-                    positiveTen: params.value > 10
+                    positiveFive: params.value >= 5 && params.value < 10,
+                    positiveTen: params.value >= 10
                 })
             }
         },
