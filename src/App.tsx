@@ -7,7 +7,7 @@ import './App.css';
 import Spreads from './components/Spreads';
 import Gainers from './components/Gainers';
 import { useState } from 'react';
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 
 function App() {
   const [market, setMarket] = useState(`future`)
