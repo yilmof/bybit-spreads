@@ -7,18 +7,29 @@ import './App.css';
 import Spreads from './components/Spreads';
 import Gainers from './components/Gainers';
 import { useState } from 'react';
+import { Box, Button } from '@mui/material';
 
 function App() {
   const [market, setMarket] = useState(`future`)
+  const [showSpreads, setShowSpreads] = useState(true)
 
   const handleChange = (event: SelectChangeEvent) => {
     setMarket(event.target.value)
+  }
+
+  const handleClick = () => {
+    if (showSpreads) {
+      setShowSpreads(false)
+    } else {
+      setShowSpreads(true)
+    }
   }
 
   return (
     <div className="App">
       <h1 style={{}}>Bybit spreads</h1>
       <div>
+        <Button sx={{marginRight: 2, height: 56}} variant="contained" size='large' disabled={showSpreads} onClick={handleClick}>Spreads</Button>
         <FormControl>
           <InputLabel>Market</InputLabel>
           <Select
@@ -30,10 +41,10 @@ function App() {
             <MenuItem value={'spot'}>Spot</MenuItem>
           </Select>
         </FormControl>
+        <Button sx={{marginLeft: 2, height: 56}} variant="contained" size='large' disabled={!showSpreads} onClick={handleClick}>Movers</Button>
       </div>
       <div className='box'>
-        <Spreads market={market}/>
-        <Gainers />
+        {showSpreads ? <Spreads market={market}/> : <Gainers />} 
       </div>
     </div>
   );

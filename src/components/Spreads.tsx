@@ -118,7 +118,7 @@ function Spreads({ market }: { market: String }) {
     //             />
     // </div>
     <div style={{ height: 800, width: '100%' }}>
-        <div style={{ display: 'flex', height: '100%', width: '80%', margin: 'auto'}}>
+        <div style={{ display: 'flex', height: '100%', width: '50%', margin: 'auto'}}>
             <div style={{ flexGrow: 1 }}>
                 <h4>Last updated: {updated.toLocaleTimeString()}</h4>
                 <DataGrid
