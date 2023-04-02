@@ -5,6 +5,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import './App.css';
 import Spreads from './components/Spreads';
+import Gainers from './components/Gainers';
 import { useState } from 'react';
 
 function App() {
@@ -30,7 +31,10 @@ function App() {
           </Select>
         </FormControl>
       </div>
-      <Spreads market={market}/>
+      <div className='box'>
+        <Spreads market={market}/>
+        <Gainers />
+      </div>
     </div>
   );
 }
