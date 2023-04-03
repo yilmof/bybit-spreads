@@ -44,7 +44,7 @@ function App() {
         <Button sx={{marginLeft: 2, height: 56}} variant="contained" size='large' disabled={!showSpreads} onClick={handleClick}>Movers</Button>
       </div>
       <div className='box'>
-        {showSpreads ? <Spreads market={market}/> : <Gainers />} 
+        {showSpreads ? <Spreads market={market}/> : <Gainers market={market} />} 
       </div>
     </div>
   );

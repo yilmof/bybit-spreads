@@ -5,39 +5,70 @@ import _ from 'lodash';
 import { Box } from '@mui/material';
 import clsx from 'clsx';
 
-const Gainers = () => {
+const Gainers = ({ market }: { market: String }) => {
     const [rows, setRows] = useState<GridRowsProp>([])
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('https://api.bybit.com/v5/market/tickers?category=linear')
-            const data = await response.json() as BybitDataFutures
+            if(market === 'future') {
+                const response = await fetch('https://api.bybit.com/v5/market/tickers?category=linear')
+                const data = await response.json() as BybitDataFutures
 
-            const rowsRaw: GridValidRowModel[] = []
-            
-            data.result.list.forEach((sym, index) => {
-                if (sym.symbol.slice(-4) === "USDT") {
-                    let volume24H = parseFloat(sym.turnover24h)
-                    if (volume24H > 50000000) {
-                        let gainvolume24H = parseFloat(sym.price24hPcnt)
-                        if (gainvolume24H > 0.03 || gainvolume24H < -0.03) {
-                            rowsRaw.push({
-                                id: index, 
-                                col1: sym.symbol, 
-                                col2: volume24H.toLocaleString('en-US', { style: 'currency', currency: 'USD' }), 
-                                col3: +(gainvolume24H*100).toFixed(2),
-                                sort: gainvolume24H
-                            })
+                const rowsRaw: GridValidRowModel[] = []
+                
+                data.result.list.forEach((sym, index) => {
+                    if (sym.symbol.slice(-4) === "USDT") {
+                        let volume24H = parseFloat(sym.turnover24h)
+                        if (volume24H > 50000000) {
+                            let gainvolume24H = parseFloat(sym.price24hPcnt)
+                            if (gainvolume24H > 0.03 || gainvolume24H < -0.03) {
+                                rowsRaw.push({
+                                    id: index, 
+                                    col1: sym.symbol, 
+                                    col2: volume24H.toLocaleString('en-US', { style: 'currency', currency: 'USD' }), 
+                                    col3: +(gainvolume24H*100).toFixed(2),
+                                    sort: gainvolume24H
+                                })
+                            }
+        
                         }
-    
+                        
                     }
-                    
-                }
-            })
+                })
 
-            let sortedRows = _.orderBy(rowsRaw, ['sort'], ['desc'])
+                let sortedRows = _.orderBy(rowsRaw, ['sort'], ['desc'])
 
-            setRows(sortedRows)
+                setRows(sortedRows)
+            } else {
+                const response = await fetch('https://api.bybit.com/v5/market/tickers?category=spot')
+                const data = await response.json() as BybitDataFutures
+
+                const rowsRaw: GridValidRowModel[] = []
+                
+                data.result.list.forEach((sym, index) => {
+                    if (sym.symbol.slice(-4) === "USDT") {
+                        let volume24H = parseFloat(sym.turnover24h)
+                        if (volume24H > 50000000) {
+                            let gainvolume24H = parseFloat(sym.price24hPcnt)
+                            if (gainvolume24H > 0.03 || gainvolume24H < -0.03) {
+                                rowsRaw.push({
+                                    id: index, 
+                                    col1: sym.symbol, 
+                                    col2: volume24H.toLocaleString('en-US', { style: 'currency', currency: 'USD' }), 
+                                    col3: +(gainvolume24H*100).toFixed(2),
+                                    sort: gainvolume24H
+                                })
+                            }
+        
+                        }
+                        
+                    }
+                })
+
+                let sortedRows = _.orderBy(rowsRaw, ['sort'], ['desc'])
+
+                setRows(sortedRows)
+            }
         }
 
         fetchData()
@@ -45,7 +76,7 @@ const Gainers = () => {
             fetchData()
         }, 50000);
         return () => clearInterval(interval);
-    }, [])
+    }, [market])
 
     const columns: GridColDef[] = [
         { field: 'col1', headerName: 'Symbol', width: 150, flex: 1 },
