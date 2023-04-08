@@ -7,7 +7,7 @@ import './App.css';
 import Spreads from './components/Spreads';
 import Gainers from './components/Gainers';
 import { useState } from 'react';
-import { Button, ButtonGroup } from '@mui/material';
+import { Button, ButtonGroup, Tooltip } from '@mui/material';
 import BinanceSpreads from './components/BinanceSpreads';
 import BinanceGainers from './components/BinanceGainers';
 
@@ -35,12 +35,18 @@ function App() {
       aria-label="outlined primary button group"
       sx={{marginTop: 4}}
       >
-        <Button disabled={exchange === 'bybit' ? true : false} onClick={() => setExchange('bybit')}>Bybit</Button>
-        <Button disabled={exchange === 'binance' ? true : false} onClick={() => setExchange('binance')}>Binance</Button>
+        <Tooltip title="Show Bybit data">
+          <Button disabled={exchange === 'bybit' ? true : false} onClick={() => setExchange('bybit')}>Bybit</Button>
+        </Tooltip>
+        <Tooltip title="Show Binance data">
+          <Button disabled={exchange === 'binance' ? true : false} onClick={() => setExchange('binance')}>Binance</Button>
+        </Tooltip>
       </ButtonGroup>
       <h1>{exchange === 'bybit' ? 'Bybit' : 'Binance'} {showSpreads ? 'spreads' : 'movers'}</h1>
       <div>
-        <Button sx={{marginRight: 2, height: 56}} variant="contained" size='large' disabled={showSpreads} onClick={handleClick}>Spreads</Button>
+        <Tooltip title="Spreads and volume">
+          <Button sx={{marginRight: 2, height: 56}} variant="contained" size='large' disabled={showSpreads} onClick={handleClick}>Spreads</Button>
+        </Tooltip>
         <FormControl>
           <InputLabel>Market</InputLabel>
           <Select
@@ -52,7 +58,9 @@ function App() {
             <MenuItem value={'spot'}>Spot</MenuItem>
           </Select>
         </FormControl>
-        <Button sx={{marginLeft: 2, height: 56}} variant="contained" size='large' disabled={!showSpreads} onClick={handleClick}>Movers</Button>
+        <Tooltip title="Most increase or decrease in price in the last 24 hours">
+          <Button sx={{marginLeft: 2, height: 56}} variant="contained" size='large' disabled={!showSpreads} onClick={handleClick}>Movers</Button>
+        </Tooltip>
       </div>
       <div className='box'>
         {showSpreads ? exchange === 'bybit' ? <Spreads market={market}/> : <BinanceSpreads market={market}/> : exchange === 'bybit' ? <Gainers market={market} /> : <BinanceGainers market={market}/>} 
