@@ -6,9 +6,9 @@ Simple app that pulls data from [Bybit](https://www.bybit.com/) to show spreads 
 
 In the project directory, you can run:
 
-### `npm run start`
+### `npm run dev`
 
-Runs the app in the development mode.\
+Runs the app in the development mode.
 
 ### `npm run build`
 
