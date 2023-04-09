@@ -9,7 +9,7 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle';
 const Gainers = ({ market }: { market: String }) => {
     const [rows, setRows] = useState<GridRowsProp>([])
 
-    useDocumentTitle('Bybit movers')
+    useDocumentTitle('Bybit Movers')
 
     useEffect(() => {
         const fetchData = async () => {

@@ -15,7 +15,7 @@ const BinanceSpreads = ({ market }: { market: String }) => {
     const [updated, setUpdated] = useState(new Date(Date.now()))
     const [isUpdated, setIsUpdated] = useState(false);
 
-    useDocumentTitle('Binance spreads')
+    useDocumentTitle('Binance Spreads')
 
     useEffect(() => {
         const fetchData = async () => {
@@ -120,17 +120,6 @@ const BinanceSpreads = ({ market }: { market: String }) => {
     ];
 
     return (
-    // <div style={{ 
-    //     height: 800, 
-    //     width: '35%', 
-    //     margin: 'auto' }}>
-    //         <h4>Last updated: {updated.toLocaleTimeString()}</h4>
-    //         <DataGrid 
-    //             rows={rows} 
-    //             columns={columns}
-    //             hideFooterSelectedRowCount
-    //             />
-    // </div>
     <div style={{ height: 800, width: '100%' }}>
         <div style={{ display: 'flex', height: '100%', width: '50%', margin: 'auto'}}>
             <div style={{ flexGrow: 1 }}>
