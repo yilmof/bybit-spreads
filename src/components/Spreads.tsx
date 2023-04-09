@@ -21,6 +21,7 @@ const netSpreadComparator: GridComparatorFn<string> = (v1, v2) => {
 function Spreads({ market }: { market: String }) {
     const [rows, setRows] = useState<GridRowsProp>([])
     const [updated, setUpdated] = useState(new Date(Date.now()))
+    const [isUpdated, setIsUpdated] = useState(false);
 
     useDocumentTitle('Bybit spreads')
 
@@ -96,7 +97,11 @@ function Spreads({ market }: { market: String }) {
         fetchData()
         const interval = setInterval(() => {
             fetchData()
-            setUpdated(new Date(Date.now()) )
+            setUpdated(new Date(Date.now()))
+            setIsUpdated(true);
+            setTimeout(() => {
+                setIsUpdated(false);
+            }, 2000);
         }, 10000);
         return () => clearInterval(interval);
     }, [market])
@@ -123,7 +128,11 @@ function Spreads({ market }: { market: String }) {
     <div style={{ height: 800, width: '100%' }}>
         <div style={{ display: 'flex', height: '100%', width: '50%', margin: 'auto'}}>
             <div style={{ flexGrow: 1 }}>
-                <h4>Last updated: {updated.toLocaleTimeString()}</h4>
+                <h4>Last updated: <span style={{
+                    display: 'inline-block',
+                    backgroundColor: isUpdated ? 'silver' : 'transparent',
+                    transition: 'background-color 2s ease'
+                }}>{updated.toLocaleTimeString()}</span></h4>
                 <DataGrid
                     rows={rows} 
                     columns={columns}
