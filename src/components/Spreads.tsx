@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import { BybitDataFutures } from './BybitDataFutures';
 import { BybitDataSpot } from './BybitDataSpot';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export interface SymbolData {
     symbol: string
@@ -20,6 +21,8 @@ const netSpreadComparator: GridComparatorFn<string> = (v1, v2) => {
 function Spreads({ market }: { market: String }) {
     const [rows, setRows] = useState<GridRowsProp>([])
     const [updated, setUpdated] = useState(new Date(Date.now()))
+
+    useDocumentTitle('Bybit spreads')
 
     useEffect(() => {
         const fetchData = async () => {

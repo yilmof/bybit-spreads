@@ -7,7 +7,7 @@ import './App.css';
 import Spreads from './components/Spreads';
 import Gainers from './components/Gainers';
 import { useState } from 'react';
-import { Button, ButtonGroup, Tooltip } from '@mui/material';
+import { Button, ButtonGroup, Divider, Tooltip } from '@mui/material';
 import BinanceSpreads from './components/BinanceSpreads';
 import BinanceGainers from './components/BinanceGainers';
 

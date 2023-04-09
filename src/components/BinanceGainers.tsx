@@ -4,9 +4,12 @@ import _ from 'lodash';
 import { Box } from '@mui/material';
 import clsx from 'clsx';
 import { BinanceVolume } from './BinanceDataFutures';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const BinanceGainers = ({ market }: { market: String }) => {
     const [rows, setRows] = useState<GridRowsProp>([])
+
+    useDocumentTitle('Binance movers')
 
     useEffect(() => {
         const fetchData = async () => {

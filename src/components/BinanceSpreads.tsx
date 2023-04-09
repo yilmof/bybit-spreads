@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { DataGrid, GridRowsProp, GridColDef, GridValidRowModel, GridComparatorFn } from '@mui/x-data-grid';
 import _ from 'lodash';
 import { Binance, BinanceVolume } from './BinanceDataFutures';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const netSpreadComparator: GridComparatorFn<string> = (v1, v2) => {
     const v1float = parseFloat(v1.replace(/[^0-9-.]/g, ''));
@@ -12,6 +13,8 @@ const netSpreadComparator: GridComparatorFn<string> = (v1, v2) => {
 const BinanceSpreads = ({ market }: { market: String }) => {
     const [rows, setRows] = useState<GridRowsProp>([])
     const [updated, setUpdated] = useState(new Date(Date.now()))
+
+    useDocumentTitle('Binance spreads')
 
     useEffect(() => {
         const fetchData = async () => {

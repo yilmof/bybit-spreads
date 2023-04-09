@@ -4,9 +4,12 @@ import { DataGrid, GridCellParams, GridColDef, GridRowsProp, GridValidRowModel }
 import _ from 'lodash';
 import { Box } from '@mui/material';
 import clsx from 'clsx';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const Gainers = ({ market }: { market: String }) => {
     const [rows, setRows] = useState<GridRowsProp>([])
+
+    useDocumentTitle('Bybit movers')
 
     useEffect(() => {
         const fetchData = async () => {
