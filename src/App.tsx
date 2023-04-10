@@ -11,6 +11,9 @@ import { Button, ButtonGroup, Divider, Tooltip } from '@mui/material';
 import BinanceSpreads from './components/BinanceSpreads';
 import BinanceGainers from './components/BinanceGainers';
 
+const BYBIT_REF_LINK = 'https://www.bybit.com/invite?ref=9GKZZ'
+const BINANCE_REF_LINK = 'https://accounts.binance.com/register?ref=10905882'
+
 function App() {
   const [market, setMarket] = useState(`future`)
   const [exchange, setExchange] = useState(`bybit`)
@@ -42,7 +45,7 @@ function App() {
           <Button disabled={exchange === 'binance' ? true : false} onClick={() => setExchange('binance')}>Binance</Button>
         </Tooltip>
       </ButtonGroup>
-      <h1>{exchange === 'bybit' ? 'Bybit' : 'Binance'} {showSpreads ? 'spreads' : 'movers'}</h1>
+      <h1>{exchange === 'bybit' ? <a className='link' href={BYBIT_REF_LINK}>Bybit</a> : <a className='link' href={BINANCE_REF_LINK}>Binance</a>} {showSpreads ? 'spreads' : 'movers'}</h1>
       <div>
         <Tooltip title="Spreads and volume">
           <Button sx={{marginRight: 2, height: 56}} variant="contained" size='large' disabled={showSpreads} onClick={handleClick}>Spreads</Button>

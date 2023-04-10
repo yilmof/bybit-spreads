@@ -32,6 +32,18 @@
   display: flex
 }
 
+.link {
+  text-decoration: none;
+  color: #1976d2;
+  border-radius: 4px;
+  transition: background-color 0.3s ease-in-out, text-decoration 0.3s ease-in-out;
+}
+
+.link:hover {
+  color: grey;
+  cursor: pointer;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
