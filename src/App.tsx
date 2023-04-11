@@ -45,7 +45,12 @@ function App() {
           <Button disabled={exchange === 'binance' ? true : false} onClick={() => setExchange('binance')}>Binance</Button>
         </Tooltip>
       </ButtonGroup>
-      <h1>{exchange === 'bybit' ? <a className='link' href={BYBIT_REF_LINK}>Bybit</a> : <a className='link' href={BINANCE_REF_LINK}>Binance</a>} {showSpreads ? 'spreads' : 'movers'}</h1>
+      <h1>
+        <Tooltip title={exchange === 'bybit' ? 'Trade on Bybit' : 'Trade on Binance'}>
+         {exchange === 'bybit' ? <a className='link' href={BYBIT_REF_LINK}>Bybit</a> : <a className='link' href={BINANCE_REF_LINK}>Binance</a>}
+        </Tooltip>
+        {showSpreads ? ' spreads' : ' movers'}
+      </h1>
       <div>
         <Tooltip title="Spreads and volume">
           <Button sx={{marginRight: 2, height: 56}} variant="contained" size='large' disabled={showSpreads} onClick={handleClick}>Spreads</Button>
