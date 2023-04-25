@@ -32,6 +32,12 @@
   display: flex
 }
 
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .link {
   text-decoration: none;
   color: #1976d2;
@@ -42,6 +48,20 @@
 .link:hover {
   color: grey;
   cursor: pointer;
+}
+
+.dark {
+  background-color: #333;
+  color: #fff;
+  transition-duration: 500ms;
+   
+}
+
+.light {
+  background-color: #fff;
+  color: #333;
+  transition-duration: 500ms;
+   
 }
 
 @keyframes App-logo-spin {

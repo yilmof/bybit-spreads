@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { BinanceVolume } from './BinanceDataFutures';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
-const BinanceGainers = ({ market }: { market: String }) => {
+const BinanceGainers = ({ market, theme  }: { market: String, theme: String }) => {
     const [rows, setRows] = useState<GridRowsProp>([])
 
     useDocumentTitle('Binance Movers')
@@ -140,11 +140,17 @@ const BinanceGainers = ({ market }: { market: String }) => {
                         
                     }}
                 >
-                    <DataGrid
+                    {theme === 'dark' ? <DataGrid
+                        sx={{ color: '#fff' }}
                         rows={rows} 
                         columns={columns}
                         hideFooterSelectedRowCount
-                        />
+                        /> : 
+                        <DataGrid
+                        rows={rows} 
+                        columns={columns}
+                        hideFooterSelectedRowCount
+                        />}
                 </Box>
             </div>
         </div>

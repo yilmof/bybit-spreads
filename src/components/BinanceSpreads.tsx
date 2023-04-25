@@ -10,7 +10,7 @@ const netSpreadComparator: GridComparatorFn<string> = (v1, v2) => {
     return v1float - v2float;
 }
 
-const BinanceSpreads = ({ market }: { market: String }) => {
+const BinanceSpreads = ({ market, theme }: { market: String, theme: String }) => {
     const [rows, setRows] = useState<GridRowsProp>([])
     const [updated, setUpdated] = useState(new Date(Date.now()))
     const [isUpdated, setIsUpdated] = useState(false);
@@ -128,11 +128,16 @@ const BinanceSpreads = ({ market }: { market: String }) => {
                     backgroundColor: isUpdated ? 'silver' : 'transparent',
                     transition: 'background-color 2s ease'
                 }}>{updated.toLocaleTimeString()}</span></h4>
-                <DataGrid
+                {theme === 'dark' ? <DataGrid
+                    sx={{ color: '#fff'}}
                     rows={rows} 
                     columns={columns}
                     hideFooterSelectedRowCount
-                    />
+                    /> : <DataGrid
+                    rows={rows} 
+                    columns={columns}
+                    hideFooterSelectedRowCount
+                    />}
             </div>
         </div>
     </div>

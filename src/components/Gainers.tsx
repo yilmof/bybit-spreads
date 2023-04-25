@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 import clsx from 'clsx';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
-const Gainers = ({ market }: { market: String }) => {
+const Gainers = ({ market, theme }: { market: String, theme: String }) => {
     const [rows, setRows] = useState<GridRowsProp>([])
 
     useDocumentTitle('Bybit Movers')
@@ -140,11 +140,17 @@ const Gainers = ({ market }: { market: String }) => {
                         
                     }}
                 >
-                    <DataGrid
+                    {theme === 'dark' ? <DataGrid
+                        sx={{ color: '#fff' }}
                         rows={rows} 
                         columns={columns}
                         hideFooterSelectedRowCount
-                        />
+                        /> : 
+                        <DataGrid
+                        rows={rows} 
+                        columns={columns}
+                        hideFooterSelectedRowCount
+                        />}
                 </Box>
             </div>
         </div>
