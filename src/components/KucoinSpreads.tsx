@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { DataGrid, GridRowsProp, GridColDef, GridValidRowModel, GridComparatorFn } from '@mui/x-data-grid';
 import _ from 'lodash';
-import { Kucoin } from './KucoinDataFutures';
+import { KucoinResponse } from './KucoinDataFutures';
 import { KucoinSpot } from './KucoinDataSpot';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -15,12 +15,18 @@ const KucoinSpreads = ({ market, theme }: { market: String, theme: String }) => 
     useEffect(() => {
         const fetchData = async () => {
             if(market === 'future') {
-                const response = await fetch('https://api-futures.kucoin.com/api/v1/contracts/active')
-                const data = await response.json() as Kucoin
+                //const response = await fetch('https://api-futures.kucoin.com/api/v1/contracts/active', {
+                const response = await fetch('/.netlify/functions/node-fetch', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                //console.log(await response.json())
+                const data = await response.json() as KucoinResponse
 
                 const rowsRaw: GridValidRowModel[] = []
 
-                data.data.forEach((sym, index) => {
+                data.msg.data.forEach((sym, index) => {
                     if (sym.symbol.slice(-4) === "SDTM") {
                         let volume24H = Number(sym.turnoverOf24h)
     
@@ -38,12 +44,17 @@ const KucoinSpreads = ({ market, theme }: { market: String, theme: String }) => 
                 
                 setRows(sortedRows)
             } else {
-                const response = await fetch('https://api.kucoin.com/api/v1/market/allTickers')
+                //const response = await fetch('https://api.kucoin.com/api/v1/market/allTickers', {
+                const response = await fetch('/.netlify/functions/node-fetch-spot', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
                 const data = await response.json() as KucoinSpot
     
                 const rowsRaw: GridValidRowModel[] = []
     
-                data.data.ticker.forEach((sym, index) => {
+                data.msg.data.ticker.forEach((sym, index) => {
                     if (sym.symbol.slice(-4) === "SDTM") {
                         let volume24H = Number(sym.volValue)
 

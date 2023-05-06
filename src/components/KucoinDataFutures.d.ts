@@ -1,3 +1,7 @@
+export interface KucoinResponse {
+    msg: Kucoin;
+}
+
 export interface Kucoin {
     code: string;
     data: Data[];
