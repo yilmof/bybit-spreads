@@ -12,9 +12,12 @@ import { useEffect, useState } from 'react';
 import { Button, ButtonGroup, Divider, Tooltip } from '@mui/material';
 import BinanceSpreads from './components/BinanceSpreads';
 import BinanceGainers from './components/BinanceGainers';
+import KucoinSpreads from './components/KucoinSpreads';
+import KucoinGainers from './components/KucoinGainers';
 
 const BYBIT_REF_LINK = 'https://www.bybit.com/invite?ref=9GKZZ'
 const BINANCE_REF_LINK = 'https://accounts.binance.com/register?ref=10905882'
+const KUCOIN_REF_LINK = 'https://www.kucoin.com/ucenter/signup?rcode=1Hxue'
 
 function App() {
   const [market, setMarket] = useState(`future`)
@@ -64,6 +67,9 @@ function App() {
             <Tooltip title="Show Binance data">
               <Button disabled={exchange === 'binance' ? true : false} onClick={() => setExchange('binance')}>Binance</Button>
             </Tooltip>
+            <Tooltip title="Show Kucoin data">
+            <Button disabled={exchange === 'kucoin' ? true : false} onClick={() => setExchange('kucoin')}>Kucoin</Button>
+            </Tooltip>
           </ButtonGroup>
         </div>
         {theme === 'dark' ? <LightModeIconButton style={{cursor: 'pointer'}} onClick={toggleTheme} sx={{ marginRight: '50px' }}/> : <DarkModeIconButton style={{cursor: 'pointer'}} onClick={toggleTheme} sx={{ marginRight: '50px' }}/>}
@@ -71,8 +77,8 @@ function App() {
       </div>
 
       <h1>
-        <Tooltip title={exchange === 'bybit' ? 'Trade on Bybit' : 'Trade on Binance'}>
-         {exchange === 'bybit' ? <a className='link' href={BYBIT_REF_LINK}>Bybit</a> : <a className='link' href={BINANCE_REF_LINK}>Binance</a>}
+        <Tooltip title={exchange === 'bybit' ? 'Trade on Bybit' : exchange === 'binance' ? 'Trade on Binance' : 'Trade on Kucoin'}>
+         {exchange === 'bybit' ? <a className='link' href={BYBIT_REF_LINK}>Bybit</a> : exchange === 'binance' ? <a className='link' href={BINANCE_REF_LINK}>Binance</a> : <a className='link' href={KUCOIN_REF_LINK}>Kucoin</a>}
         </Tooltip>
         {showSpreads ? ' spreads' : ' movers'}
       </h1>
@@ -118,7 +124,26 @@ function App() {
         </Tooltip>
       </div>
       <div className='box'>
-        {showSpreads ? exchange === 'bybit' ? <Spreads market={market} theme={theme}/> : <BinanceSpreads market={market} theme={theme}/> : exchange === 'bybit' ? <Gainers market={market} theme={theme} /> : <BinanceGainers market={market} theme={theme}/>} 
+        {(() => {
+              if (showSpreads){
+                if (exchange === 'bybit') {
+                  return <Spreads market={market} theme={theme}/>
+                } else if (exchange === 'binance') {
+                  return <BinanceSpreads market={market} theme={theme}/>
+                } else {
+                  return <KucoinSpreads market={market} theme={theme}/>
+                }
+              } else {
+                if (exchange === 'bybit') {
+                  return <Gainers market={market} theme={theme} />
+                } else if (exchange === 'binance') {
+                  return <BinanceGainers market={market} theme={theme}/>
+                } else {
+                  return <KucoinGainers market={market} theme={theme}/>
+                }
+              }
+        })()}
+        {/* {showSpreads ? exchange === 'bybit' ? <Spreads market={market} theme={theme}/> : exchange === 'binance' ? <BinanceSpreads market={market} theme={theme}/> : <KucoinSpreads market={market} theme={theme}/> : !showSpreads ? exchange === 'bybit' ? <Gainers market={market} theme={theme} /> : <BinanceGainers market={market} theme={theme}/> : <KucoinGainers market={market} theme={theme}/>}  */}
       </div>
     </div>
   );
