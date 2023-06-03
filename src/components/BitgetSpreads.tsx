@@ -58,7 +58,7 @@ const BitgetSpreads = ({ market, theme }: { market: String, theme: String }) => 
                 setRows(sortedRows)
             } else {
                 //const response = await fetch('https://api.bitget.com/api/spot/v1/market/tickers')
-                const response = await fetch('/.netlify/functions/fetch-bitget-futures', {
+                const response = await fetch('/.netlify/functions/fetch-bitget-spot', {
                     headers: {
                         'Content-Type': 'application/json',
                     }
