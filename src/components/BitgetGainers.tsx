@@ -27,10 +27,8 @@ const BitgetGainers = ({ market, theme }: { market: String, theme: String }) => 
                 data.msg.data.forEach((sym, index) => {
                     let volume24H = Number(sym.usdtVolume)
 
-                    let gain = (parseFloat(sym.high24h) - parseFloat(sym.low24h)) / parseFloat(sym.low24h)
-
                     if (volume24H > 50000000) {
-                        let gainvolume24H = gain
+                        let gainvolume24H = parseFloat(sym.chgUtc)
                         if (gainvolume24H > 0.03 || gainvolume24H < -0.03) {
                             rowsRaw.push({
                                 id: index, 
