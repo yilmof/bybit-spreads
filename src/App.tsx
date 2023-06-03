@@ -14,10 +14,13 @@ import BinanceSpreads from './components/BinanceSpreads';
 import BinanceGainers from './components/BinanceGainers';
 import KucoinSpreads from './components/KucoinSpreads';
 import KucoinGainers from './components/KucoinGainers';
+import BitgetSpreads from './components/BitgetSpreads';
+import BitgetGainers from './components/BitgetGainers';
 
 const BYBIT_REF_LINK = 'https://www.bybit.com/invite?ref=9GKZZ'
 const BINANCE_REF_LINK = 'https://accounts.binance.com/register?ref=10905882'
 const KUCOIN_REF_LINK = 'https://www.kucoin.com/ucenter/signup?rcode=1Hxue'
+const BITGET_REF_LINK = 'https://www.bitget.com/en/referral/register?from=referral&clacCode=TD2DL09Z'
 
 function App() {
   const [market, setMarket] = useState(`future`)
@@ -52,6 +55,36 @@ function App() {
     }
   }
 
+  const handleTooltipTitle = (exchange: string) => {
+    switch(exchange) {
+      case 'bybit':
+        return 'Trade on Bybit'
+      case 'binance':
+        return 'Trade on Binance'
+      case 'kucoin':
+        return 'Trade on Kucoin'
+      case 'bitget':
+        return 'Trade on Bitget'
+      default:
+        return 'Error loading tooltip'
+    }
+  }
+
+  const handleTooltipReflink = (exchange: string) => {
+    switch(exchange) {
+      case 'bybit':
+        return <a className='link' href={BYBIT_REF_LINK}>Bybit</a>
+      case 'binance':
+        return <a className='link' href={BINANCE_REF_LINK}>Binance</a>
+      case 'kucoin':
+        return <a className='link' href={KUCOIN_REF_LINK}>Kucoin</a>
+      case 'bitget':
+        return <a className='link' href={BITGET_REF_LINK}>Bitget</a>
+      default:
+        return <a className='link'>Exchange</a>
+    }
+  }
+
   return (
     <div className={`App ${theme}`}>
       <div className='nav'>
@@ -70,6 +103,9 @@ function App() {
             <Tooltip title="Show Kucoin data">
             <Button disabled={exchange === 'kucoin' ? true : false} onClick={() => setExchange('kucoin')}>Kucoin</Button>
             </Tooltip>
+            <Tooltip title="Show Bitget data">
+            <Button disabled={exchange === 'bitget' ? true : false} onClick={() => setExchange('bitget')}>Bitget</Button>
+            </Tooltip>
           </ButtonGroup>
         </div>
         {theme === 'dark' ? <LightModeIconButton style={{cursor: 'pointer'}} onClick={toggleTheme} sx={{ marginRight: '50px' }}/> : <DarkModeIconButton style={{cursor: 'pointer'}} onClick={toggleTheme} sx={{ marginRight: '50px' }}/>}
@@ -77,8 +113,8 @@ function App() {
       </div>
 
       <h1>
-        <Tooltip title={exchange === 'bybit' ? 'Trade on Bybit' : exchange === 'binance' ? 'Trade on Binance' : 'Trade on Kucoin'}>
-         {exchange === 'bybit' ? <a className='link' href={BYBIT_REF_LINK}>Bybit</a> : exchange === 'binance' ? <a className='link' href={BINANCE_REF_LINK}>Binance</a> : <a className='link' href={KUCOIN_REF_LINK}>Kucoin</a>}
+        <Tooltip title={handleTooltipTitle(exchange)}>
+          {handleTooltipReflink(exchange)}
         </Tooltip>
         {showSpreads ? ' spreads' : ' movers'}
       </h1>
@@ -130,16 +166,20 @@ function App() {
                   return <Spreads market={market} theme={theme}/>
                 } else if (exchange === 'binance') {
                   return <BinanceSpreads market={market} theme={theme}/>
-                } else {
+                } else if (exchange === 'kucoin') {
                   return <KucoinSpreads market={market} theme={theme}/>
+                } else {
+                  return <BitgetSpreads market={market} theme={theme} />
                 }
               } else {
                 if (exchange === 'bybit') {
                   return <Gainers market={market} theme={theme} />
                 } else if (exchange === 'binance') {
                   return <BinanceGainers market={market} theme={theme}/>
-                } else {
+                } else if (exchange === 'kucoin') {
                   return <KucoinGainers market={market} theme={theme}/>
+                } else {
+                  return <BitgetGainers market={market} theme={theme}/>
                 }
               }
         })()}
